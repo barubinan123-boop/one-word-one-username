@@ -5,5 +5,15 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 // value is fixed: no input, no network, no randomness.
 const USERNAME = 'hsnmbrk07'
 
+// Gate check (see RULES.txt): the entry must be 1-30 characters, a single
+// word with no whitespace, and not empty. Fail loudly instead of writing
+// an invalid entry file.
+if (USERNAME.length < 1 || USERNAME.length > 30 || /\s/.test(USERNAME)) {
+  console.error(
+    'Invalid username: must be one word, 1-30 characters, no whitespace',
+  )
+  process.exit(1)
+}
+
 mkdirSync('/output', { recursive: true })
 writeFileSync('/output/entry.txt', USERNAME, 'utf8')
